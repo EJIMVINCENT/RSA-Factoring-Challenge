@@ -1,0 +1,52 @@
+#!/usr/bin/python3
+
+from sys import argv, exit, stderr
+from math import sqrt
+"""Finds the factors of an number"""
+
+
+def is_prime(num):
+    if num <= 3:
+        return True
+    if num % 2 == 0 or num % 3 == 0:
+        return False
+    i = 5
+    while i * i <= num:
+        if num % i == 0 or num % (i + 2) == 0:
+            return False
+        i += 6
+    return True
+
+
+def factorize(n):
+    """Finds factors of n."""
+    if n % 2 == 0:
+        return 2, n // 2
+
+    limit = int(sqrt(n)) + 1
+    for i in range(3, limit, 2):
+        if n % i == 0:
+            return i, n // i
+
+    return None, None
+
+
+def main():
+    if len(argv) != 2:
+        stderr.write("Usage: factors <file>")
+        exit(1)
+    while 1:
+        try:
+            with open(argv[1], 'r') as f:
+                for line in f:
+                    n = int(line.strip())
+                    p, q = factorize(n)
+                    if is_prime(p) is True and is_prime(q) is True:
+                        print("{}={}*{}".format(n, q, p))
+                        exit(1)
+        except IOError:
+            stderr.write("Error: Could not read from {}".format(argv[1]))
+            exit(1)
+
+
+main()

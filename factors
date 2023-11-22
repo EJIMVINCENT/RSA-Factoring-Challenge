@@ -1,0 +1,37 @@
+#!/usr/bin/python3
+
+from sys import argv, exit, stderr
+from math import sqrt
+"""Finds the factors of an number"""
+
+
+def factorize(n):
+    """Finds factors of n."""
+    if n % 2 == 0:
+        return 2, n // 2
+
+    limit = int(sqrt(n)) + 1
+    for i in range(3, limit, 2):
+        if n % i == 0:
+            return i, n // i
+
+    return None, None
+
+
+def main():
+    if len(argv) != 2:
+        stderr.write("Usage: factors <file>")
+        exit(1)
+
+    try:
+        with open(argv[1], 'r') as f:
+            for line in f:
+                n = int(line.strip())
+                p, q = factorize(n)
+                print("{}={}*{}".format(n, q, p))
+    except IOError:
+        stderr.write("Error: Could not read from {}".format(argv[1]))
+        exit(1)
+
+
+main()
