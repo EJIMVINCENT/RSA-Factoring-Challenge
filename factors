@@ -28,7 +28,7 @@ def main():
             for line in f:
                 n = int(line.strip())
                 p, q = factorize(n)
-                print("{}={}*{}".format(n, p, q))
+                print("{}={}*{}".format(n, q, p))
     except IOError:
         stderr.write("Error: Could not read from {}".format(argv[1]))
         exit(1)
